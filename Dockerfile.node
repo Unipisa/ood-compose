@@ -13,3 +13,14 @@ RUN yum install -y nc && \
 # Install for Rstudio App
 COPY apps/RStudio/install-compute-dependencies.sh /install-rstudio.sh
 RUN /bin/bash /install-rstudio.sh
+
+# ssh server
+# Don't forget to run '/usr/sbin/sshd -D' if you actually want to ssh into this container
+RUN yum install -y openssh-server
+RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
+RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -N ''
+#ADD src/sshd/sshd_config /etc/ssh/sshd_config 
+RUN echo root:welcome1 | chpasswd
+
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]

@@ -41,6 +41,7 @@ services:
       - ./apps/RStudio:/var/www/ood/apps/sys/RStudio
     expose:
       - "6817"
+      - "22"
     depends_on:
       - "slurmdbd"
 
